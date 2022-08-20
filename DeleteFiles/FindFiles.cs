@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,16 @@ namespace DeleteFiles
                 return false;
             }
 
-            string[] files = Directory.GetFiles(_filePath);
+            string[] files;
+            try
+            {
+                 files= Directory.GetFiles(_filePath);
+            }
+            catch (System.IO.DirectoryNotFoundException ex)
+            {
+                return false;
+            }
+
             foreach (var file in files)
             {
                 if (file.Contains(_fileName))
